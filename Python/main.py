@@ -71,4 +71,4 @@ if __name__ == '__main__':
     ax.set_ylabel('Difference between exact and RK4 solutions')
     plt.savefig('pics/errors_RC4_tolerance.png')
 
-    plt.show()
+    #plt.show()
