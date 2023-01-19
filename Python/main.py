@@ -1,32 +1,8 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
-from models import *
-
-
-def beauty(axes, xlabel=r'$x$', ylabel=r'$y(x)$' ):
-    """Set x & y labels, draw legend, draw grid"""
-    axes.grid()
-    axes.legend()
-    axes.set_xlabel(xlabel)
-    axes.set_ylabel(ylabel)
-
-
-def draw_solution(x, y, ye, figure, title):
-    """x, y, ye - arrays of x, numeric solutions, exact solution"""
-    ax = figure.subplots()
-    plt.title(title)
-    ax.plot(x, y[:,0], 'ro', label='Numeric')
-    ax.plot(x, ye, label='Exact', color='black')
-    beauty(ax)
-
-
-def draw_errors(x, e, figure, title):
-    """x, e - arrays of x, error e"""
-    ax = figure.subplots()
-    plt.title(title)
-    ax.plot(x, e, 'ro', label='Numeric')
-    beauty(ax, ylabel='Difference between exact and RK4 solutions')
-
+from draw import draw_solution, draw_errors
+from models import runge_kutta, runge_kutta_tolerance
 
 if __name__ == '__main__':
 
@@ -77,4 +53,4 @@ if __name__ == '__main__':
         draw_errors(x=X, e=E, figure=fig, title=titles['errors'][ind])
         plt.savefig(save_to['errors'][ind])
 
-    #plt.show()
+    plt.show()
