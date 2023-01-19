@@ -2,6 +2,32 @@ import matplotlib.pyplot as plt
 
 from models import *
 
+
+def beauty(axes, xlabel=r'$x$', ylabel=r'$y(x)$' ):
+    """Set x & y labels, draw legend, draw grid"""
+    axes.grid()
+    axes.legend()
+    axes.set_xlabel(xlabel)
+    axes.set_ylabel(ylabel)
+
+
+def draw_solution(x, y, ye, figure, title):
+    """x, y, ye - arrays of x, numeric solutions, exact solution"""
+    ax = figure.subplots()
+    plt.title(title)
+    ax.plot(x, y[:,0], 'ro', label='Numeric')
+    ax.plot(x, ye, label='Exact', color='black')
+    beauty(ax)
+
+
+def draw_errors(x, e, figure, title):
+    """x, e - arrays of x, error e"""
+    ax = figure.subplots()
+    plt.title(title)
+    ax.plot(x, e, 'ro', label='Numeric')
+    beauty(ax, ylabel='Difference between exact and RK4 solutions')
+
+
 if __name__ == '__main__':
     x0 = 0
     xN = 5
@@ -20,25 +46,13 @@ if __name__ == '__main__':
     # Draw
     # Solution
     fig = plt.figure(0)
-    ax = fig.subplots()
-    plt.title(f'Solution RC4, h = {h}')
-    ax.plot(X, Y[:,0], 'ro', label='Numeric')
-    ax.plot(X, Ye, label='Exact', color='black')
-    ax.grid()
-    ax.legend()
-    ax.set_xlabel('x')
-    ax.set_ylabel('y(x)')
+    draw_solution(x=X, y=Y, ye=Ye, figure=fig, title=f'Solution RC4, h = {h}')
     plt.savefig('pics/solution_RC4.png')
     # Errors
     fig = plt.figure(1)
-    ax = fig.subplots()
-    plt.title(f'Errors RC4, h = {h}')
-    ax.plot(X, E, 'ro', label='Numeric')
-    ax.grid()
-    ax.legend()
-    ax.set_xlabel('x')
-    ax.set_ylabel('Difference between exact and RK4 solutions')
+    draw_errors(x=X, e=E, figure=fig, title=f'Errors RC4, h = {h}')
     plt.savefig('pics/errors_RC4.png')
+
 
     # RK4 with defined tolerance
     tol = 0.5
@@ -51,24 +65,11 @@ if __name__ == '__main__':
     # Draw
     # Solution
     fig = plt.figure(2)
-    ax = fig.subplots()
-    plt.title(f'Solution RC4 with variable step, accuracy = {tol}')
-    ax.plot(X, Y[:,0], 'ro', label='Numeric')
-    ax.plot(X, Ye, label='Exact', color='black')
-    ax.grid()
-    ax.legend()
-    ax.set_xlabel('x')
-    ax.set_ylabel('y(x)')
+    draw_solution(x=X, y=Y, ye=Ye, figure=fig, title=f'Solution RC4 with variable step, accuracy = {tol}')
     plt.savefig('pics/solution_RC4_tolerance.png')
     # Errors
     fig = plt.figure(3)
-    ax = fig.subplots()
-    plt.title(f'Errors RC4 with variable step, accuracy = {tol}')
-    ax.plot(X, E, 'ro', label='Numeric')
-    ax.grid()
-    ax.legend()
-    ax.set_xlabel('x')
-    ax.set_ylabel('Difference between exact and RK4 solutions')
+    draw_errors(x=X, e=E, figure=fig, title=f'Errors RC4 with variable step, accuracy = {tol}')
     plt.savefig('pics/errors_RC4_tolerance.png')
 
     #plt.show()
