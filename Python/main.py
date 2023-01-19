@@ -29,47 +29,52 @@ def draw_errors(x, e, figure, title):
 
 
 if __name__ == '__main__':
+
+    # conditions of the problem
     x0 = 0
     xN = 5
     y0 = np.array([0, 3, -9, -8, 0])
-    h = 0.01
 
-    # grid of solutions with RK4
-    X, Y = runge_kutta(x0, y0, xN, h)
+    # solver parameters
+    h = 0.01   # for RK4 with fixed step
+    tol = 0.5  # for RK4 with defined tolerance
 
-    # exact solution
-    Ye = -np.exp(-3 * X) * X * (129 * X ** 3 + 16 * X ** 2 - 54 * X - 36) / 12
+    # graph titles
+    titles = {'solution': [f'Solution RC4, fixed step $h = {h}$',
+                            f'Solution RC4 with variable step, accuracy = {tol}'],
+               'errors': [f'Errors RC4, fixed step $h = {h}$',
+                          f'Errors RC4 with variable step, accuracy = {tol}']}
 
-    # Errors - difference of RC4 and exaxt solution
-    E = (Ye - Y[:, 0])
+    # saving names of graphs files
+    save_to = {'solution': ['pics/solution_RC4.png',
+                             'pics/solution_RC4_tolerance.png'],
+                'errors': ['pics/errors_RC4.png',
+                           'pics/errors_RC4_tolerance.png']}
 
-    # Draw
-    # Solution
-    fig = plt.figure(0)
-    draw_solution(x=X, y=Y, ye=Ye, figure=fig, title=f'Solution RC4, h = {h}')
-    plt.savefig('pics/solution_RC4.png')
-    # Errors
-    fig = plt.figure(1)
-    draw_errors(x=X, e=E, figure=fig, title=f'Errors RC4, h = {h}')
-    plt.savefig('pics/errors_RC4.png')
+    # both methods
+    for ind, method in enumerate(
+            [runge_kutta(x0, y0, xN, h),
+             runge_kutta_tolerance(x0, y0, xN, h=0.1, t=tol)]):
 
+        # grid of solutions
+        X, Y = method
 
-    # RK4 with defined tolerance
-    tol = 0.5
-    X, Y = runge_kutta_tolerance(x0, y0, xN, h=0.1, t=tol)
-    # Exact solution
-    Ye = -np.exp(-3 * X) * X * (129 * X ** 3 + 16 * X ** 2 - 54 * X - 36) / 12
-    # Errors - difference of RC4_tol and exact solution
-    E = (Ye - Y[:, 0])
+        # Exact solution
+        Ye = -np.exp(-3 * X) * X * (129 * X ** 3 + 16 * X ** 2 - 54 * X - 36) / 12
 
-    # Draw
-    # Solution
-    fig = plt.figure(2)
-    draw_solution(x=X, y=Y, ye=Ye, figure=fig, title=f'Solution RC4 with variable step, accuracy = {tol}')
-    plt.savefig('pics/solution_RC4_tolerance.png')
-    # Errors
-    fig = plt.figure(3)
-    draw_errors(x=X, e=E, figure=fig, title=f'Errors RC4 with variable step, accuracy = {tol}')
-    plt.savefig('pics/errors_RC4_tolerance.png')
+        # Errors - difference of RC4_tol and exact solution
+        E = (Ye - Y[:, 0])
+
+        # === Draw ===
+
+        # Solution
+        fig = plt.figure(ind * 2)
+        draw_solution(x=X, y=Y, ye=Ye, figure=fig, title=titles['solution'][ind])
+        plt.savefig(save_to['solution'][ind])
+
+        # Errors
+        fig = plt.figure(ind * 2 + 1)
+        draw_errors(x=X, e=E, figure=fig, title=titles['errors'][ind])
+        plt.savefig(save_to['errors'][ind])
 
     #plt.show()
