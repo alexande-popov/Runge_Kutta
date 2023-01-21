@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from draw import draw_solution, draw_errors
+from draw import draw_solution, draw_errors, save_to_db
 from models import runge_kutta, runge_kutta_tolerance
 
 if __name__ == '__main__':
@@ -41,6 +41,10 @@ if __name__ == '__main__':
         # Errors - difference of RC4_tol and exact solution
         E = (Ye - Y[:, 0])
 
+        # Save to DB
+        method_name = 'runge_kutta' if ind == 0 else 'runge_kutta_tolerance'
+        save_to_db(x=X, y=Y, ye=Ye, e=E, table_name=method_name)
+
         # === Draw ===
 
         # Solution
@@ -53,4 +57,4 @@ if __name__ == '__main__':
         draw_errors(x=X, e=E, figure=fig, title=titles['errors'][ind])
         plt.savefig(save_to['errors'][ind])
 
-    plt.show()
+    #plt.show()
