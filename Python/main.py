@@ -16,16 +16,16 @@ if __name__ == '__main__':
     tol = 0.5  # for RK4 with defined tolerance
 
     # graph titles
-    titles = {'solution': [f'Solution RC4, fixed step $h = {h}$',
-                            f'Solution RC4 with variable step, accuracy = {tol}'],
-               'errors': [f'Errors RC4, fixed step $h = {h}$',
-                          f'Errors RC4 with variable step, accuracy = {tol}']}
+    titles = {'solution': [f'Solution RK4, fixed step $h = {h}$',
+                            f'Solution RK4 with variable step, accuracy = {tol}'],
+               'errors': [f'Errors RK4, fixed step $h = {h}$',
+                          f'Errors RK4 with variable step, accuracy = {tol}']}
 
     # saving names of graphs files
-    save_to = {'solution': ['pics/solution_RC4.png',
-                             'pics/solution_RC4_tolerance.png'],
-                'errors': ['pics/errors_RC4.png',
-                           'pics/errors_RC4_tolerance.png']}
+    save_to = {'solution': ['pics/solution_RK4.png',
+                             'pics/solution_RK4_tolerance.png'],
+                'errors': ['pics/errors_RK4.png',
+                           'pics/errors_RK4_tolerance.png']}
 
     # both methods
     for ind, method in enumerate(
