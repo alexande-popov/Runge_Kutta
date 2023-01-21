@@ -18,7 +18,7 @@ python main.py
 
 ```
 
-The result of the script will be graphics and database tables in the folder `/out'.
+The result of the script will be graphics and database tables in the folder `/out`.
 
 
 
