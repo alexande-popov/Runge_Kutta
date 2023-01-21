@@ -22,10 +22,10 @@ if __name__ == '__main__':
                           f'Errors RK4 with variable step, accuracy = {tol}']}
 
     # saving names of graphs files
-    save_to = {'solution': ['pics/solution_RK4.png',
-                             'pics/solution_RK4_tolerance.png'],
-                'errors': ['pics/errors_RK4.png',
-                           'pics/errors_RK4_tolerance.png']}
+    save_to = {'solution': ['out/pics/solution_RK4.png',
+                            'out/pics/solution_RK4_tolerance.png'],
+               'errors': ['out/pics/errors_RK4.png',
+                          'out/pics/errors_RK4_tolerance.png']}
 
     # both methods
     for ind, method in enumerate(
